@@ -8,3 +8,10 @@ spec:
   types:
   - Ingress
   - Egress
+  egress:
+    - action: Allow
+      protocol: UDP, TCP
+      destination:
+        selector: k8s-app == "kube-dns"
+        ports:
+          - 53
