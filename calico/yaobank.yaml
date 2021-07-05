@@ -63,7 +63,7 @@ spec:
           - "-listen-client-urls"
           - "http://0.0.0.0:2379"
       nodeSelector:
-        kubernetes.io/hostname: aks-default-24740563-vmss000001
+        kubernetes.io/hostname: aks-default-24740563-vmss000000
 
 ---
 apiVersion: v1
