@@ -1,5 +1,6 @@
 ---
 apiVersion: crd.projectcalico.org/v1
+apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
   name: nodeport-policy
@@ -9,6 +10,13 @@ spec:
   applyOnForward: true
   preDNAT: true
   ingress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports: [30180]
+    source:
+      nets:
+      - 10.244.0.0/16
   - action: Deny
     protocol: TCP
     destination:
