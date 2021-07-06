@@ -1,0 +1,8 @@
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: bgppeer-global-host1
+spec:
+  peerIP: 10.245.0.254
+  asNumber: 64512
