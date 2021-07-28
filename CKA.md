@@ -49,6 +49,12 @@ ETCDCTL_API=3 etcdctl --endpoints $ENDPOINT --data-dir=/var/lib/etcd-restore --c
 
 ## Etcd and kube-apiserver certificates
 
+### Check common name
+
+```bash
+openssl x509 -in file-path.crt -text -noout
+```
+
 ## Upgrade Cluster
 
 ### Upgrade Control Plane
