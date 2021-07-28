@@ -1,5 +1,11 @@
 # CKA
 
+## Multiple Scheduler
+
+## Etcd backup and restore
+
+## Etcd and kube-apiserver certificates
+
 ## Upgrade Cluster
 
 ### Upgrade Control Plane
