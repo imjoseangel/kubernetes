@@ -1,6 +1,27 @@
 # CKA
 
-## Multiple Scheduler
+## Multiple Schedulers
+
+```yaml
+metadata:
+  labels:
+    component: my-scheduler
+    tier: control-plane
+  name: my-scheduler
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-scheduler
+    - --authentication-kubeconfig=/etc/kubernetes/scheduler.conf
+    - --authorization-kubeconfig=/etc/kubernetes/scheduler.conf
+    - --bind-address=127.0.0.1
+    - --kubeconfig=/etc/kubernetes/scheduler.conf
+    - --leader-elect=false
+    - --port=10282
+    - --scheduler-name=my-scheduler
+    - --secure-port=0
+```
 
 ## Etcd backup and restore
 
