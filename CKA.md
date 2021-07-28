@@ -25,6 +25,28 @@ spec:
 
 ## Etcd backup and restore
 
+### Backup
+
+```bash
+ETCDCTL_API=3 etcdctl --endpoints $ENDPOINT --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save snapshotdb
+```
+
+### Restore
+
+```bash
+ETCDCTL_API=3 etcdctl --endpoints $ENDPOINT --data-dir=/var/lib/etcd-restore --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot restore snapshotdb
+```
+
+#### Change on etcd.yaml
+
+```yml
+  volumes:
+  - hostPath:
+      path: /var/lib/etcd-restore
+      type: DirectoryOrCreate
+    name: etcd-data
+```
+
 ## Etcd and kube-apiserver certificates
 
 ## Upgrade Cluster
