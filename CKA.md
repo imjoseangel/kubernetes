@@ -139,3 +139,23 @@ Some points to note:
 
 * usages has to be 'client auth'
 * request is the base64 encoded value of the CSR file content. You can get the content using this command: `cat myuser.csr | base64 | tr -d "\n"`
+
+## Kubeconfig
+
+### Get config from external file
+
+```bash
+kubectl config view --kubeconfig=my-kube-config
+```
+
+### Change the current context with external file
+
+```bash
+kubectl config --kubeconfig=/root/my-kube-config use-context research
+```
+
+# Fix user certificates
+
+```bash
+kubectl config set-credentials dev-user --client-certificate=/etc/kubernetes/pki/users/dev-user/dev-user.crt --client-key=/etc/kubernetes/pki/users/dev-user/dev-user.key
+```
