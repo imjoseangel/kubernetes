@@ -154,8 +154,77 @@ kubectl config view --kubeconfig=my-kube-config
 kubectl config --kubeconfig=/root/my-kube-config use-context research
 ```
 
-# Fix user certificates
+### Fix user certificates
 
 ```bash
 kubectl config set-credentials dev-user --client-certificate=/etc/kubernetes/pki/users/dev-user/dev-user.crt --client-key=/etc/kubernetes/pki/users/dev-user/dev-user.key
+```
+
+## Roles
+
+### Authorization Modes
+
+Link: [Authorization Modes](https://kubernetes.io/docs/reference/access-authn-authz/authorization/#authorization-modules)
+
+### Act as different user
+
+```bash
+kubectl get pods --as dev-user
+```
+
+### Create role and rolebinding
+
+```bash
+kubectl create role developer --resource=pods --verb=list --verb=create
+kubectl create rolebinding dev-user-binding --user=dev-user --role=developer
+```
+
+### Edit roles
+
+```bash
+kubectl edit role developer -n default
+```
+
+### Create a new role
+
+```bash
+kubectl create role deploy-role -n blue --resource=deployments --verb=create
+```
+
+```yml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: deploy-role
+  namespace: blue
+rules:
+- apiGroups:
+  - apps
+  - extensions
+  resources:
+  - deployments
+  verbs:
+  - create
+```
+
+```bash
+kubectl create rolebinding dev-user-deploy-binding -n blue --user=dev-user --role=deploy-role
+```
+
+```yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dev-user-deploy-binding
+  namespace: blue
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: deploy-role
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: dev-user
 ```
