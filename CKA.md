@@ -228,3 +228,47 @@ subjects:
   kind: User
   name: dev-user
 ```
+
+### Cluster Roles
+
+#### Test
+
+```bash
+kubectl auth can-i list nodes --as user
+```
+
+```bash
+kubectl create clusterrole node-admin --verb=list --resource=nodes
+```
+
+```yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+  name: node-admin
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - list
+```
+
+```bash
+kubectl create clusterrolebinding cluster-node-admin --clusterrole=node-admin --user=myuser
+```
+
+```yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-node-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: node-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: myuser
+```
