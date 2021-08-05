@@ -2,7 +2,8 @@
 
 ## Multiple Schedulers
 
-```yaml
+```yml
+---
 metadata:
   labels:
     component: my-scheduler
@@ -40,6 +41,7 @@ ETCDCTL_API=3 etcdctl --endpoints $ENDPOINT --data-dir=/var/lib/etcd-restore --c
 #### Change on etcd.yaml
 
 ```yml
+---
   volumes:
   - hostPath:
       path: /var/lib/etcd-restore
@@ -124,6 +126,7 @@ kubectl uncordon <node-to-drain>
 ### Manifest
 
 ```yml
+---
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 metadata:
@@ -242,6 +245,7 @@ kubectl create clusterrole node-admin --verb=list --resource=nodes
 ```
 
 ```yml
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
   name: node-admin
@@ -259,6 +263,7 @@ kubectl create clusterrolebinding cluster-node-admin --clusterrole=node-admin --
 ```
 
 ```yml
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -313,6 +318,7 @@ spec:
 ### Capabilities
 
 ```yml
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -330,4 +336,51 @@ spec:
     securityContext:
       capabilities:
         add: ["NET_ADMIN", "SYS_TIME"]
+```
+
+## Network Policies
+
+### Example
+
+```yml
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: internal-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      name: internal
+  policyTypes:
+  - Ingress
+  - Egress
+
+  ingress:
+    - {}
+
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: payroll
+    ports:
+      - protocol: TCP
+        port: 8080
+
+  - to:
+    - podSelector:
+        matchLabels:
+          name: mysql
+    ports:
+      - protocol: TCP
+        port: 3306
+
+  - ports:
+    - port: 53
+      protocol: UDP
+
+    - port: 53
+      protocol: TCP
 ```
