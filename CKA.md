@@ -272,3 +272,62 @@ subjects:
   kind: User
   name: myuser
 ```
+
+## Security Context
+
+### Check user running a pod
+
+```bash
+kubectl exec mypod -- whoami
+```
+
+### Security Context
+
+Documentation: [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+
+### Tip: Force killing a pod
+
+```bash
+kubectl delete pod mypod --force
+```
+
+```yml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  namespace: default
+spec:
+  securityContext:
+    runAsUser: 1010
+  containers:
+  - command:
+    - sleep
+    - "4800"
+    image: ubuntu
+    name: ubuntu
+    resources: {}
+```
+
+### Capabilities
+
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper
+  namespace: default
+spec:
+  containers:
+  - command:
+    - sleep
+    - "4800"
+    image: ubuntu
+    imagePullPolicy: Always
+    name: ubuntu
+    resources: {}
+    securityContext:
+      capabilities:
+        add: ["NET_ADMIN", "SYS_TIME"]
+```
