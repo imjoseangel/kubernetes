@@ -384,3 +384,30 @@ spec:
     - port: 53
       protocol: TCP
 ```
+
+## Volumes
+
+### hostpath
+
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: webapp
+  name: webapp
+spec:
+  containers:
+  - image: kodekloud/event-simulator
+    name: webapp
+    volumeMounts:
+    - mountPath: /log
+      name: log
+  volumes:
+  - name: log
+    hostPath:
+      # directory location on host
+      path: /var/log/webapp
+      # this field is optional
+      type: Directory
+```
