@@ -415,3 +415,39 @@ spec:
       # this field is optional
       type: Directory
 ```
+
+### Persistent Volume Claim
+
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx:alpine
+    name: nginx
+    volumeMounts:
+      - mountPath: "/var/www/html"
+        name: local
+  volumes:
+    - name: local
+      persistentVolumeClaim:
+        claimName: local-pvc
+```
+
+### Storage Classes
+
+#### Local no-provisioner
+
+```yml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+```
