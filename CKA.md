@@ -390,21 +390,25 @@ spec:
 ### hostpath
 
 ```yml
+---
 apiVersion: v1
 kind: Pod
 metadata:
-  labels:
-    run: webapp
   name: webapp
+  namespace: default
 spec:
   containers:
-  - image: kodekloud/event-simulator
-    name: webapp
+  - env:
+    - name: LOG_HANDLERS
+      value: file
+    image: kodekloud/event-simulator
+    imagePullPolicy: Always
+    name: event-simulator
     volumeMounts:
     - mountPath: /log
-      name: log
+      name: log-volume
   volumes:
-  - name: log
+  - name: log-volume
     hostPath:
       # directory location on host
       path: /var/log/webapp
