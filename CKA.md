@@ -451,3 +451,15 @@ metadata:
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 ```
+
+## Network
+
+### Important Paths
+
+```bash
+cat /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+cat /var/lib/kubelet/kubeadm-flags.env
+
+ls /opt/cni/bin/
+ls /etc/cni/net.d/
+```
