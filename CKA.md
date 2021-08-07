@@ -286,9 +286,9 @@ subjects:
 kubectl exec mypod -- whoami
 ```
 
-### Security Context
+### Documentation
 
-Documentation: [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+[Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 
 ### Tip: Force killing a pod
 
