@@ -463,3 +463,20 @@ cat /var/lib/kubelet/kubeadm-flags.env
 ls /opt/cni/bin/
 ls /etc/cni/net.d/
 ```
+
+### Find pods and services network respectively
+
+```bash
+kubectl logs -n kube-system weave-net-7dkbv weave
+
+INFO: 2021/08/08 18:21:52.547965 Command line options: map[conn-limit:200 datapath:datapath db-prefix:/weavedb/weave-net docker-api: expect-npc:true http-addr:127.0.0.1:6784 ipalloc-init:consensus=1 ipalloc-range:10.50.0.0/16 metrics-addr:0.0.0.0:6782 name:ae:b7:5f:b0:e1:a4 nickname:node01 no-dns:true no-masq-local:true port:6783]
+```
+
+```bash
+cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep cluster-ip-range
+```
+
+#### Kube-proxy modes
+
+[Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+[Use IPVS kube-proxy](https://docs.projectcalico.org/networking/use-ipvs)
