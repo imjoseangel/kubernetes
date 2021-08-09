@@ -480,3 +480,37 @@ cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep cluster-ip-range
 
 [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 [Use IPVS kube-proxy](https://docs.projectcalico.org/networking/use-ipvs)
+
+## Ingress
+
+```yml
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simple-ingress
+  namespace: app-space
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /wear
+        pathType: Prefix
+        backend:
+          service:
+            name: wear-service
+            port:
+              number: 8080
+      - path: /watch
+        pathType: Prefix
+        backend:
+          service:
+            name: video-service
+            port:
+              number: 8080
+```
+
+Take care of `rewrite-target` and `ssl-redirect` annotations.
