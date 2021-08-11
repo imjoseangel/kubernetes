@@ -514,3 +514,15 @@ spec:
 ```
 
 Take care of `rewrite-target` and `ssl-redirect` annotations.
+
+## Cluster Installation
+
+### Kubeadm
+
+```bash
+kubeadm init --apiserver-advertise-address=10.42.230.12 --apiserver-cert-extra-sans=controlplane --pod-network-cidr=10.244.0.0/16
+```
+
+### Install Flannel
+
+[Adding Windows nodes](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/adding-windows-nodes/)
