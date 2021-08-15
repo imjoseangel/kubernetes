@@ -526,3 +526,13 @@ kubeadm init --apiserver-advertise-address=10.42.230.12 --apiserver-cert-extra-s
 ### Install Flannel
 
 [Adding Windows nodes](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/adding-windows-nodes/)
+
+## Troubleshooting
+
+### Application
+
+* Review service name
+* Review service port
+* Review service selector
+* Review credentials
+* Review nodeport
