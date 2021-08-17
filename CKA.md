@@ -536,3 +536,9 @@ kubeadm init --apiserver-advertise-address=10.42.230.12 --apiserver-cert-extra-s
 * Review service selector
 * Review credentials
 * Review nodeport
+
+### Cluster
+
+* Review kube-scheduler command (For pod scheduling)
+* Review kube-controller-manager command (For pod replica)
+* Check volume mounts
