@@ -539,6 +539,14 @@ kubeadm init --apiserver-advertise-address=10.42.230.12 --apiserver-cert-extra-s
 
 ### Cluster
 
+#### Control Plane
+
 * Review kube-scheduler command (For pod scheduling)
 * Review kube-controller-manager command (For pod replica)
 * Check volume mounts
+
+#### Worker Node
+
+* Review kubelet status
+* Review `/var/lib/kubelet/config.yaml` file
+* Check certificate and config (Server and port) in `/etc/kubernetes/kubelet.conf`
