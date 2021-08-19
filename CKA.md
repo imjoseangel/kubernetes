@@ -550,3 +550,53 @@ kubeadm init --apiserver-advertise-address=10.42.230.12 --apiserver-cert-extra-s
 * Review kubelet status
 * Review `/var/lib/kubelet/config.yaml` file
 * Check certificate and config (Server and port) in `/etc/kubernetes/kubelet.conf`
+
+#### Network
+
+* Review Network Plugin:
+
+```yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+```
+
+[Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network)
+
+# Study this:
+
+```yml
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+
+#### Kube-proxy
+
+Review Configuration:
+
+```yml
+      - command:
+        - /usr/local/bin/kube-proxy
+        - --config=/var/lib/kube-proxy/config.conf
+        - --hostname-override=$(NODE_NAME)
+
+        volumeMounts:
+        - mountPath: /var/lib/kube-proxy
+          name: kube-proxy
+
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: kube-proxy
+        name: kube-proxy
+```
+
+```yml
+kubectl describe -n kube-system configmap kube-proxy
+```
+
+##### Kube-DNS
+
+Review Configuration:
+
+```yml
+  selector:
+    k8s-app: kube-dns
+```
