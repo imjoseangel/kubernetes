@@ -551,7 +551,7 @@ kubeadm init --apiserver-advertise-address=10.42.230.12 --apiserver-cert-extra-s
 * Review `/var/lib/kubelet/config.yaml` file
 * Check certificate and config (Server and port) in `/etc/kubernetes/kubelet.conf`
 
-#### Network
+#### Networking Plugin
 
 * Review Network Plugin:
 
@@ -599,4 +599,37 @@ Review Configuration:
 ```yml
   selector:
     k8s-app: kube-dns
+```
+
+### JSON Path - Kubectl
+
+Get Nodes:
+
+```bash
+kubectl get nodes -o=jsonpath='{.items[*].metadata.name}'
+kubectl get nodes -o=jsonpath='{.items[*].status.nodeInfo.osImage}'
+```
+
+Get Users from kubeconfig:
+
+```bash
+kubectl config view --kubeconfig=~/.kube/my-config -o jsonpath='{.users[*].name}'
+```
+
+Sort PV by capacity:
+
+```bash
+kubectl get pv --sort-by=.spec.capacity.storage
+```
+
+Custom Columns:
+
+```bash
+kubectl get pv --sort-by=.spec.capacity.storage -o=custom-columns="NAME:.metadata.name,CAPACITY:.spec.capacity.storage"
+```
+
+Get Context from User:
+
+```bash
+kubectl config view --kubeconfig=/root/my-kube-config -o jsonpath='{.contexts[?(@.context.user == "aws-user")].name}'
 ```
