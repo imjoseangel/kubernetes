@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: resources
+  namespace: test
+spec:
+  limits:
+  - default:
+      memory: 512Mi
+      cpu: 1
+    defaultRequest:
+      memory: 256Mi
+      cpu: 0.5
+    max:
+      memory: 1Gi
+      cpu: 4
+    min:
+      memory: 128Mi
+      cpu: 0.5
+    type: Container
