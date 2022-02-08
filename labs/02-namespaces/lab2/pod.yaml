@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-world
+  namespace: development
+spec:
+  containers:
+  - name: hello-world
+    image: busybox
+    command:
+    - sleep
+    - "3600"
+    imagePullPolicy: IfNotPresent
+    resources: {}
